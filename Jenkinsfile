@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     // Crée l'image Docker
-                    sh 'docker build -t $DOCKER_IMAGE .'
+                    bat 'docker build -t $DOCKER_IMAGE .'
                 }
             }
         }
@@ -28,8 +28,8 @@ pipeline {
                 script {
                     // Connexion à Docker Hub et push de l'image
                     withCredentials([usernamePassword(credentialsId: "$DOCKER_HUB_CREDENTIALS", usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                        sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
-                        sh 'docker push $DOCKER_IMAGE'
+                        bat 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+                        bat 'docker push $DOCKER_IMAGE'
                     }
                 }
             }
@@ -39,7 +39,7 @@ pipeline {
             steps {
                 script {
                     // Déployer l'image Docker dans un conteneur
-                    sh 'docker run -d -p 3000:3000 $DOCKER_IMAGE'
+                    bat 'docker run -d -p 3000:3000 $DOCKER_IMAGE'
                 }
             }
         }
