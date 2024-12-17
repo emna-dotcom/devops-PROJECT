@@ -8,10 +8,18 @@ pipeline {
 
     stages {
         stage('Checkout') {
-            steps {
-                // Extrait le code du repository GitHub
-                git 'https://github.com/emna-dotcom/devops-PROJECT.git'
-            }
+           steps {
+            script {
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: '*/main']], // Assurez-vous que 'main' est correct
+                    userRemoteConfigs: [[
+                        url: 'https://github.com/emna-dotcom/devops-PROJECT.git',
+                        credentialsId: 'git-hub-creds-ID' // Votre ID Jenkins credentials
+                ]]
+            ])
+        }
+    }
         }
 
         stage('Build Docker Image') {
