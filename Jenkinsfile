@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = 'mounj75/static-api-image'
-        DOCKER_TAG = 'Latest'
+        DOCKER_TAG = 'latest'
         DOCKER_HUB_CREDENTIALS = 'docker-hub-creds-ID' // Nom des credentials dans Jenkins
     }
 
