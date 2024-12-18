@@ -52,8 +52,10 @@ pipeline {
                 }
             }
         }
-    }
+    
 
+
+}
     post {
         success {
             echo 'Pipeline succeeded!'
@@ -64,25 +66,3 @@ pipeline {
     }
 }
 
-            }
-        }
-
-        stage('Deploy Docker Container') {
-            steps {
-                script {
-                    // Déployer l'image Docker dans un conteneur
-                    bat 'docker run -d -p 3000:3000 $DOCKER_IMAGE'
-                }
-            }
-        }
-    }
-
-    post {
-        success {
-            echo 'Pipeline succeeded!'
-        }
-        failure {
-            echo 'Pipeline failed.'
-        }
-    }
-}
