@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = 'mounj75/static-api-image'
+        DOCKER_TAG = 'Latest'
         DOCKER_HUB_CREDENTIALS = 'docker-hub-creds-ID' // Nom des credentials dans Jenkins
     }
 
@@ -26,7 +27,7 @@ pipeline {
             steps {
                 script {
                     // Crée l'image Docker
-                    bat 'docker build -t $DOCKER_IMAGE .'
+                    bat 'docker build -t $DOCKER_IMAGE:$DOCKER_TAG .'
                 }
             }
         }
@@ -37,6 +38,7 @@ pipeline {
                     // Connexion à Docker Hub et push de l'image
                     withCredentials([usernamePassword(credentialsId: "$DOCKER_HUB_CREDENTIALS", usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                         bat 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+                        bat 'docker tag $DOCKER_IMAGE:$DOCKER_TAG'
                         bat 'docker push $DOCKER_IMAGE'
                     }
                 }
